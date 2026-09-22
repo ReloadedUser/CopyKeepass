@@ -1,9 +1,9 @@
 # CopyKeepass
 # CopyKeePass
 
-![Python](https://shields.io)
-![KeePass](https://shields.io)
-![License](https://shields.io)
+![Database Utility](https://shields.io)
+![Output Format](https://shields.io)
+![Security Focus](https://shields.io)
 
 A Python program designed to securely copy and replicate your KeePass database.
 
