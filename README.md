@@ -1,8 +1,8 @@
 # CopyKeepass
 ## A python program to copy your keepass database
 
-### Is your keepass database broken? Do you want to rename it? Do you want to copy it automatically, without typing hundreds of passwords, comments and entries? 
-### CopyKeepass is here!
+
+
 
 
 ## Download and run
