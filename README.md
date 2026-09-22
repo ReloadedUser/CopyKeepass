@@ -1,7 +1,7 @@
 # CopyKeepass
 # CopyKeePass
 
-https://img.shields.io/badge/language-python-blue
+![https://img.shields.io/badge/language-Python-blue] 
 https://img.shields.io/badge/status-open-blue
 https://img.shields.io/badge/security-level-high-blue
 
