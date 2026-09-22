@@ -3,7 +3,7 @@
 
 https://img.shields.io/badge/language-python-blue
 https://img.shields.io/badge/status-open-blue
-https://img.shields.io/badge/security level-high-blue
+https://img.shields.io/badge/security-level-high-blue
 
 A Python program designed to securely copy and replicate your KeePass database.
 
