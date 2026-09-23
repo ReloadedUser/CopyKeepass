@@ -1,69 +1,102 @@
 # CopyKeepass
 
+CopyKeepass is a lightweight Python script that helps you duplicate one KeePass database into a new `.kdbx` file while preserving the folder structure and entries.
 
-![Python](https://img.shields.io/badge/language-Python-blue)
-![](https://img.shields.io/badge/status-opened-purple)
-![](https://img.shields.io/badge/safety_level-high-yellow)
+It is useful when you want to create a copy of an existing KeePass database with a new file name or new master password, without manually recreating the database structure.
 
-A Python program designed to securely copy and replicate your KeePass database.
+## Features
 
----
+- Copies KeePass groups and subgroups
+- Copies entries and preserves:
+  - title
+  - username
+  - password
+  - URL
+  - notes
+- Creates a new target KeePass database from a source database
+- Runs from the command line with simple prompts
 
-## 🚀 Download and Run
+## Requirements
 
-### For PyCharm
-1. **Copy the GitHub URL:** Go to the GitHub page of the project, click the green **Code** button, and copy the HTTPS URL.
-2. **Open PyCharm's VCS Menu:** 
-   * If you are on the Welcome Screen, click **Clone** (or *Get from Version Control*).
-   * If you already have a project open, go to the top menu and select **Git > Clone** (or *VCS > Get from Version Control*).
-3. **Paste and Clone:** In the *Repository URL* tab, paste the link into the **URL** field. In the **Directory** field, choose the local folder where you want to save the project. Click **Clone**.
+- Python 3
+- `pykeepass`
 
-### For VS Code
-1. **Copy the GitHub URL:** Go to the GitHub page of the project, click the green **Code** button, and copy the HTTPS URL.
-2. **Open the Command Palette:** Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac), type `Git: Clone`, and press `Enter`.
-   * *Alternative:* Click on the **Source Control** icon in the left Activity Bar and select **Clone Repository**.
-3. **Paste and Clone:** Paste the copied GitHub repository URL into the input field at the top and press `Enter`.
-4. **Select Destination:** Choose a local directory folder where you want to save the project files. Click **Select as Repository Destination**.
-5. **Open Workspace:** When prompted at the bottom right, click **Open** to load the workspace.
-
----
-
-## 📦 Dependencies
-
-Open your terminal or Python console and install the required library:
+Install the dependency:
 
 ```bash
 pip install pykeepass
 ```
 
----
+## Getting Started
 
-## 📥 Inputs
+1. Clone the repository:
 
-The program requires the following inputs to execute:
+```bash
+git clone https://github.com/ReloadedUser/CopyKeepass.git
+cd CopyKeepass
+```
 
-### File Paths
-* **Old File Path:** The path to the file you want to copy.
-  * ⚠️ **Warning:** Provide the exact path to ensure the program can locate the source file.
-* **New File Path:** The path to the file you want to create.
+2. Install the dependencies:
 
-### Passwords
-* **Old File Password:** The password to the file you want to copy (old file).
-* **New File Password:** The password to the file you want to create (new file).
-  * ⚠️ **Warning:** Create a strong password to maintain file security.
+```bash
+pip install pykeepass
+```
 
----
+3. Run the script:
 
-## 📤 Outputs
+```bash
+python main.py
+```
 
-* The program creates a `.kdbx` file at the specified new file path.
-* It returns the location of the newly created file.
-* It returns an exit code of `0` upon a successful operation.
+4. When prompted, provide:
+   - the path to the source `.kdbx` file
+   - the path to the new `.kdbx` file to create
+   - the source database master password
+   - the new database master password
 
+## How It Works
 
-## Outputs
-- the program creates a .kdbx file in the
-  > new file path
+The script:
 
-- it return the location of the new created file and exit code 0 if it succeed
-  
+1. Loads the source KeePass database using `PyKeePass`
+2. Creates a new database at the target path
+3. Copies the root group name and hierarchy from the source database
+4. Recreates sibling and nested groups in the target database
+5. Adds each entry into the appropriate target group
+6. Saves the new database
+
+## Notes
+
+- Always keep backups of your KeePass files before making copies.
+- Use a strong password for the newly created database.
+- This script is intended for terminal use and uses interactive prompts.
+
+## Example
+
+```bash
+python main.py
+```
+
+Example prompts:
+
+```text
+Enter the path to the new .kdbx file:
+/path/to/new_database.kdbx
+
+Enter the path to the old .kdbx file:
+/path/to/source_database.kdbx
+
+Enter the password (master key) to the old .kdbx file:
+********
+
+Enter the password (master key) to the new .kdbx file:
+********
+```
+
+## License
+
+This project is distributed without an explicit license file. Please check the repository for the current licensing terms before using it in production or redistributing it.
+
+## Contributing
+
+Pull requests and suggestions are welcome. If you would like to improve the tool, please fork the repository and submit your changes.
