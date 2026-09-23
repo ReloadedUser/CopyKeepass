@@ -1,6 +1,70 @@
 import re
-from getpass import getpass
+import sys
+
+try:
+    import termios
+    import tty
+except ImportError:
+    termios = None
+    tty = None
+
+try:
+    import msvcrt
+except ImportError:
+    msvcrt = None
+
 from pykeepass import PyKeePass, create_database
+
+
+def prompt_hidden(prompt_text):
+    """Prompt for input while showing '*' for each typed character."""
+    print(prompt_text, end="", flush=True)
+    password = ""
+
+    if sys.platform.startswith("win") and msvcrt is not None:
+        while True:
+            ch = msvcrt.getch()
+            if ch in (b"\r", b"\n"):
+                print()
+                return password
+            if ch == b"\x08" or ch == b"\x7f":
+                if password:
+                    password = password[:-1]
+                    print("\b \b", end="", flush=True)
+                continue
+            if ch in (b"\x03", b"\x04"):
+                raise KeyboardInterrupt
+
+            password += ch.decode("utf-8", errors="ignore")
+            print("*", end="", flush=True)
+
+    if termios is not None and tty is not None:
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setcbreak(fd)
+            while True:
+                ch = sys.stdin.read(1)
+                if ch in ("\n", "\r"):
+                    print()
+                    return password
+                if ch == "\x7f" or ch == "\b":
+                    if password:
+                        password = password[:-1]
+                        print("\b \b", end="", flush=True)
+                    continue
+                if ch == "\x03":
+                    raise KeyboardInterrupt
+
+                password += ch
+                print("*", end="", flush=True)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
+    # Fallback if terminal control is unavailable
+    password = input()
+    print()
+    return password
 
 
 def user_input():
@@ -14,17 +78,16 @@ def user_input():
     print("Enter the path to the old .kdbx file:")
     param_dict["old_path"] = re.sub(r'"', "", input())
 
-    # Give the password to the old .kdbx file. getpass hides the password
-    # while it is being typed instead of displaying it on screen.
-    print("Enter the password (master key) to the old .kdbx file:")
+    # Give the password to the old .kdbx file. Each typed character is shown as *.
     param_dict["source.kp"] = PyKeePass(
-        param_dict["old_path"], password=getpass()
+        param_dict["old_path"],
+        password=prompt_hidden("Enter the password (master key) to the old .kdbx file: ")
     )
 
     # Give the password to the new .kdbx file
-    print("Enter the password (master key) to the new .kdbx file:")
     param_dict["target.kp"] = create_database(
-        param_dict["new_path"], password=getpass()
+        param_dict["new_path"],
+        password=prompt_hidden("Enter the password (master key) to the new .kdbx file: ")
     )
 
     return param_dict
