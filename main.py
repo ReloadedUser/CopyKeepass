@@ -70,13 +70,13 @@ def prompt_hidden(prompt_text):
 def user_input():
     param_dict = dict()
 
-    # Give the path to download the new .kdbx file (+name-here is "keypass")
-    print("Enter the path to the new .kdbx file:")
-    param_dict["new_path"] = re.sub(r'"', "", input())
-
     # Give the path to the .kdbx file you want to copy
     print("Enter the path to the old .kdbx file:")
     param_dict["old_path"] = re.sub(r'"', "", input())
+
+    # Give the path to download the new .kdbx file (+name-here is "keypass")
+    print("Enter the path to the new .kdbx file:")
+    param_dict["new_path"] = re.sub(r'"', "", input())
 
     # Give the password to the old .kdbx file. Each typed character is shown as *.
     param_dict["source.kp"] = PyKeePass(
