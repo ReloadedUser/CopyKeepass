@@ -93,10 +93,6 @@ Enter the password (master key) to the new .kdbx file:
 ********
 ```
 
-## License
-
-This project is distributed without an explicit license file. Please check the repository for the current licensing terms before using it in production or redistributing it.
-
 ## Contributing
 
 Pull requests and suggestions are welcome. If you would like to improve the tool, please fork the repository and submit your changes.
